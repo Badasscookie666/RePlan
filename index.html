@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Im Aufbau</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg0:   #f0f2f5;
+      --bg1:   #ffffff;
+      --bg2:   #f5f7fa;
+      --bg3:   #edf0f4;
+      --b1:    #e2e6ec;
+      --b2:    #cdd3dc;
+      --t1:    #1c2333;
+      --t2:    #5c6677;
+      --t3:    #9ba8b5;
+      --gold:  #1a4fa8;
+      --gold-bg: rgba(26,79,168,0.06);
+      --gold-bd: rgba(26,79,168,0.20);
+      --font:  'Inter','Segoe UI',system-ui,-apple-system,sans-serif;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg0);
+      font-family: var(--font);
+      color: var(--t1);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    header {
+      height: 60px;
+      background: var(--bg1);
+      border-bottom: 1px solid var(--b1);
+      display: flex;
+      align-items: center;
+      padding: 0 28px;
+      flex-shrink: 0;
+    }
+
+    .logo-name {
+      color: var(--gold);
+      font-weight: 800;
+      font-size: 17px;
+      letter-spacing: 5px;
+      line-height: 1;
+    }
+
+    .logo-sub {
+      color: var(--t3);
+      font-size: 8px;
+      letter-spacing: 3px;
+      font-weight: 600;
+      line-height: 1;
+      margin-top: 3px;
+    }
+
+    .divider {
+      width: 1px;
+      height: 28px;
+      background: var(--b2);
+      margin: 0 16px;
+    }
+
+    .badge {
+      padding: 3px 10px;
+      border-radius: 3px;
+      background: var(--bg3);
+      border: 1px solid var(--b2);
+      color: var(--t2);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+    }
+
+    /* ── Main ── */
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 24px;
+    }
+
+    .card {
+      background: var(--bg1);
+      border: 1px solid var(--b1);
+      border-radius: 8px;
+      padding: 52px 60px;
+      max-width: 560px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 4px 24px rgba(0,0,0,.06), 0 1px 4px rgba(0,0,0,.04);
+    }
+
+    .icon-wrap {
+      width: 64px;
+      height: 64px;
+      border-radius: 8px;
+      background: var(--gold-bg);
+      border: 1px solid var(--gold-bd);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 28px;
+    }
+
+    .icon-wrap svg {
+      color: var(--gold);
+    }
+
+    .eyebrow {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--t1);
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+
+    .desc {
+      font-size: 14px;
+      color: var(--t2);
+      line-height: 1.7;
+      margin-bottom: 36px;
+    }
+
+    /* ── Progress bar ── */
+    .progress-wrap {
+      margin-bottom: 36px;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .progress-label span {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: var(--t3);
+      text-transform: uppercase;
+    }
+
+    .progress-label .pct {
+      color: var(--gold);
+    }
+
+    .progress-track {
+      height: 4px;
+      background: var(--bg3);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 68%;
+      background: linear-gradient(90deg, var(--gold), #2e6fd4);
+      border-radius: 2px;
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: .6; }
+    }
+
+    /* ── Steps ── */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      text-align: left;
+      margin-bottom: 36px;
+    }
+
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 6px;
+      border: 1px solid var(--b1);
+      background: var(--bg2);
+    }
+
+    .step-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .step-dot.done   { background: #1f7a45; }
+    .step-dot.active { background: var(--gold); box-shadow: 0 0 0 3px rgba(26,79,168,.18); animation: pulse 1.6s ease-in-out infinite; }
+    .step-dot.todo   { background: var(--b2); }
+
+    .step-text {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--t2);
+      flex: 1;
+    }
+
+    .step-text.done   { color: var(--t2); text-decoration: line-through; text-decoration-color: var(--b2); }
+    .step-text.active { color: var(--t1); font-weight: 600; }
+
+    .step-tag {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      padding: 2px 8px;
+      border-radius: 3px;
+      text-transform: uppercase;
+    }
+
+    .step-tag.done   { background: rgba(31,122,69,.08); color: #1f7a45; border: 1px solid rgba(31,122,69,.22); }
+    .step-tag.active { background: var(--gold-bg); color: var(--gold); border: 1px solid var(--gold-bd); }
+    .step-tag.todo   { background: transparent; color: var(--t3); border: 1px solid var(--b1); }
+
+    /* ── Footer note ── */
+    .note {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 16px;
+      border-radius: 6px;
+      background: var(--bg0);
+      border: 1px solid var(--b1);
+      font-size: 11px;
+      color: var(--t3);
+    }
+
+    .note-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+
+    /* ── Page footer ── */
+    footer {
+      height: 48px;
+      background: var(--bg1);
+      border-top: 1px solid var(--b1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    footer span {
+      font-size: 10px;
+      color: var(--t3);
+      letter-spacing: 1.5px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div>
+      <div class="logo-name">MKMAIN</div>
+      <div class="logo-sub">INTERNE TOOLS &amp; SYSTEME</div>
+    </div>
+    <div class="divider"></div>
+    <div class="badge">IM AUFBAU</div>
+  </header>
+
+  <main>
+    <div class="card">
+
+      <div class="icon-wrap">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="20" height="14" rx="2"/>
+          <path d="M8 21h8M12 17v4"/>
+          <path d="M9 9l2 2 4-4"/>
+        </svg>
+      </div>
+
+      <div class="eyebrow">Seite im Aufbau</div>
+      <h1>Wird gerade entwickelt</h1>
+      <p class="desc">
+        Diese Seite befindet sich aktuell in der Entwicklung.<br/>
+        Bitte schaue bald wieder vorbei.
+      </p>
+
+      <div class="progress-wrap">
+        <div class="progress-label">
+          <span>Fortschritt</span>
+          <span class="pct">68%</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill"></div>
+        </div>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-dot done"></div>
+          <span class="step-text done">Konzept &amp; Design</span>
+          <span class="step-tag done">Fertig</span>
+        </div>
+        <div class="step">
+          <div class="step-dot done"></div>
+          <span class="step-text done">Datenbankstruktur</span>
+          <span class="step-tag done">Fertig</span>
+        </div>
+        <div class="step">
+          <div class="step-dot active"></div>
+          <span class="step-text active">Entwicklung &amp; Implementierung</span>
+          <span class="step-tag active">Aktiv</span>
+        </div>
+        <div class="step">
+          <div class="step-dot todo"></div>
+          <span class="step-text">Testen &amp; Qualitätssicherung</span>
+          <span class="step-tag todo">Ausstehend</span>
+        </div>
+        <div class="step">
+          <div class="step-dot todo"></div>
+          <span class="step-text">Veröffentlichung</span>
+          <span class="step-tag todo">Ausstehend</span>
+        </div>
+      </div>
+
+      <div class="note">
+        <div class="note-dot"></div>
+        Diese Seite ist nur intern zugänglich · MKMAIN Systeme
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <span>MKMAIN · INTERNE ENTWICKLUNG</span>
+  </footer>
+
+</body>
+</html>
