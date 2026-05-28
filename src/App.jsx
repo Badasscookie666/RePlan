@@ -794,38 +794,33 @@ async function doPDF(config, products) {
     y += 26;
   }
 
-  /* ── Regalansichten page ── */
-  doc.addPage();
-  drawHeader(doc.getNumberOfPages());
-  y = 28;
-
-  doc.setFontSize(11); doc.setFont("helvetica","bold"); doc.setTextColor(10,20,50);
-  doc.text("Regalansichten", ML, y); y += 10;
-
+  /* ── Regalansichten — one per page ── */
   const views = [
     { id: "shelf-pdf-normal", label: "Normalansicht" },
     { id: "shelf-pdf-margin", label: "Spanne-Heatmap" },
     { id: "shelf-pdf-vk",    label: "VK-Preisheatmap" },
   ];
 
-  const viewW = (PW - 2 * ML - 8) / 3;
-  let vx = ML;
-  let maxH = 0;
-
   for (const { id, label } of views) {
+    doc.addPage();
+    drawHeader(doc.getNumberOfPages());
+    let vy = 28;
+    doc.setFontSize(11); doc.setFont("helvetica","bold"); doc.setTextColor(10,20,50);
+    doc.text(label, ML, vy); vy += 8;
     const svgEl = document.getElementById(id);
     if (!svgEl) continue;
     try {
       const { dataUrl, aspect } = await svgToDataUrl(svgEl);
-      const iH = viewW * aspect;
-      if (iH > maxH) maxH = iH;
-      doc.setFontSize(7.5); doc.setFont("helvetica","bold"); doc.setTextColor(60,60,60);
-      doc.text(label, vx + viewW / 2, y, { align: "center" });
-      doc.addImage(dataUrl, "PNG", vx, y + 5, viewW, iH);
+      const maxW = PW - 2 * ML;
+      const maxH = PH - vy - 14;
+      const byW  = maxW * aspect;
+      let iW, iH;
+      if (byW <= maxH) { iW = maxW; iH = byW; }
+      else             { iH = maxH; iW = maxH / aspect; }
+      const ix = ML + (maxW - iW) / 2;
+      doc.addImage(dataUrl, "PNG", ix, vy, iW, iH);
     } catch (_) {}
-    vx += viewW + 4;
   }
-  y += maxH + 10;
 
   /* ── Page footers ── */
   const np = doc.getNumberOfPages();
@@ -1054,17 +1049,19 @@ export default function App() {
                 </button>
               </div>
 
-              {/* 3 shelf views */}
+              {/* 3 shelf views — full width stacked */}
               <div style={{ marginBottom: 20 }}>
                 <div style={{ color: C.t3, fontSize: 10, fontWeight: 600, letterSpacing: 2, marginBottom: 12, textTransform: "uppercase" }}>Regalansichten</div>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 10 }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                   {[["normal","Normalansicht"], ["margin","Spanne-Heatmap"], ["vk","VK-Preisheatmap"]].map(([m,lbl]) => (
                     <div key={m} style={{ background: C.bg2, border: `1px solid ${C.b1}`, borderRadius: C.radius.lg, overflow: "hidden" }}>
-                      <div style={{ padding: "8px 12px", borderBottom: `1px solid ${C.b1}`, color: C.t2, fontSize: 11, fontWeight: 600 }}>{lbl}</div>
-                      <div style={{ padding: 10 }}>
-                        <ShelfSVG config={config} products={products} mode={m}
-                          onLevel={() => setTab("design")} onProd={() => setTab("design")}
-                          onReorder={() => {}} svgId={`shelf-export-${m}`} interactive={false} />
+                      <div style={{ padding: "8px 14px", borderBottom: `1px solid ${C.b1}`, color: C.t2, fontSize: 11, fontWeight: 600 }}>{lbl}</div>
+                      <div style={{ padding: "16px 20px", display: "flex", justifyContent: "center" }}>
+                        <div style={{ maxWidth: 680, width: "100%" }}>
+                          <ShelfSVG config={config} products={products} mode={m}
+                            onLevel={() => setTab("design")} onProd={() => setTab("design")}
+                            onReorder={() => {}} svgId={`shelf-export-${m}`} interactive={false} />
+                        </div>
                       </div>
                     </div>
                   ))}
