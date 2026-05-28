@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-ChildItem -Recurse -File d:\\\\Code\\\\MKMAIN | Where-Object {$_.Extension -in \".jsx\",\".tsx\",\".js\"} | Select-Object FullName)"
+    ]
+  }
+}
